@@ -11,7 +11,7 @@ The work began with a critical review of EEG seizure detection and a closer exam
 
 ## Current status
 
-The 200 Hz features were prepared in 40 archive batches and saved to Drive. The first private Kaggle staging attempt stopped at a shared-file download quota before normalization or training. A later Colab recovery restored 36 of 40 batches before a Drive transfer ended with an incomplete response. Its completed batch checkpoints and run log were saved to Drive. A resumed Colab attempt has now started from those verified checkpoints. At this update, model normalization and training have not started, and there are no reproduction metrics to report.
+The 200 Hz features were prepared in 40 archive batches and saved to Drive. After a failed Kaggle staging attempt and an interrupted Colab restore, a resumable Colab recovery verified all 40 batches. Training-only normalization completed and a DGDCN training run started on a Tesla T4. At the latest verified update (2026-10-09 13:03:46 UTC), two development epochs had completed and checkpoints and logs were syncing to Drive. Epoch 2 had development AUROC 0.7604, F1 0.1720, precision 0.1178, recall 0.3186, and specificity 0.9224 at its development-selected threshold. These are preliminary clip-level development metrics from one run, not held-out evaluation or clinical event-detection results. Evaluation has not run. Accuracy is especially misleading here: with 2,310 positive and 71,077 negative development clips, an always-negative classifier would have 96.85% accuracy, exceeding the model's 90.34% at epoch 2.
 
 ## Reproduction setup
 
@@ -25,4 +25,4 @@ The EEG corpus is restricted research data. This public record contains no recor
 
 ## Reporting rule
 
-Only report training or evaluation metrics after they appear in saved run outputs. Clip-level metrics are not event-level sensitivity, false alarms per day, latency, or evidence of clinical utility. A completed model run would still be a benchmark reproduction attempt, not prospective clinical validation.
+Only report training or evaluation metrics after they appear in saved run outputs. Clip-level metrics are not event-level sensitivity, false alarms per day, latency, or evidence of clinical utility. The current development results are preliminary: two epochs, one run, and no confidence intervals. Held-out evaluation is still pending. A completed model run would still be a benchmark reproduction attempt, not prospective clinical validation.
