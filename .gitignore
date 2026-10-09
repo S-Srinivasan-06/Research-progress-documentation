@@ -1,0 +1,27 @@
+# Restricted recordings, labels, derived features, checkpoints, and model outputs
+data/
+datasets/
+artifacts/
+outputs/
+results/
+*.edf
+*.tse
+*.tse_bi
+*.h5
+*.hdf5
+*.tar
+*.tar.gz
+*.pt
+*.pth
+*.ckpt
+
+# Credentials and temporary runtime files
+.env
+.env.*
+!.env.example
+kaggle.json
+credentials.json
+secrets/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
