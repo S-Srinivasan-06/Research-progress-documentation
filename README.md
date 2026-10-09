@@ -11,7 +11,9 @@ The work began with a critical review of EEG seizure detection and a closer exam
 
 ## Current status
 
-The 200 Hz features were prepared in 40 archive batches and saved to Drive. After a failed Kaggle staging attempt and an interrupted Colab restore, a resumable Colab recovery verified all 40 batches. Training-only normalization completed and a DGDCN training run started on a Tesla T4. At the latest verified update (2026-10-09 13:13:42 UTC), four development epochs had completed and checkpoints and metrics were syncing to Drive. Epoch 4 was the best development-AUROC checkpoint so far: AUROC 0.7694, F1 0.1879, precision 0.1534, recall 0.2424, and specificity 0.9565 at its development-selected threshold. This remains below the paper's reported 12-second AUC of 0.887, and training is still in progress. These are preliminary clip-level development metrics from one run, not held-out evaluation or clinical event-detection results. Evaluation has not run. Accuracy is especially misleading here: with 2,310 positive and 71,077 negative development clips, an always-negative classifier would have 96.85% accuracy, exceeding the model's 93.40% at epoch 4.
+On 2026-10-09 at 14:23 UTC, a fresh diagnostic found a replacement CPU runtime with no training files or processes. Earlier monitor calls had returned saved cell output, so the apparent stall at epoch 4 was not a reliable live observation. Direct Drive inspection recovered aggregate metrics through epoch 7, saved at 13:33 UTC. Epoch 4 remains the best development-AUROC checkpoint at 0.7694. Both `last.pt` and `best.pt`, the normalization, configuration, and metrics are present in Drive. Checkpoint contents have not yet been reopened in the replacement runtime.
+
+Training is currently stopped. Recovery requires a GPU runtime, Drive authorization, restoration of the saved feature archives, and explicit checkpoint resume. The reason the previous runtime ended is not established. No final evaluation artifact was found in the saved run folder. See [the recorded development metrics](results/development_metrics.jsonl) and [the diagnosis](docs/PROJECT_PROGRESS.md#10-runtime-replacement-and-stale-monitor-output).
 
 ## Reproduction setup
 
@@ -25,4 +27,4 @@ The EEG corpus is restricted research data. This public record contains no recor
 
 ## Reporting rule
 
-Only report training or evaluation metrics after they appear in saved run outputs. Clip-level metrics are not event-level sensitivity, false alarms per day, latency, or evidence of clinical utility. The current development results are preliminary: four epochs, one run, and no confidence intervals. Held-out evaluation is still pending. A completed model run would still be a benchmark reproduction attempt, not prospective clinical validation.
+Only report training or evaluation metrics after they appear in saved run outputs. Clip-level metrics are not event-level sensitivity, false alarms per day, latency, or evidence of clinical utility. The current development results are preliminary: seven epochs, one run, and no confidence intervals. Held-out evaluation is still pending. A completed model run would still be a benchmark reproduction attempt, not prospective clinical validation.
