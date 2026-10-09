@@ -47,6 +47,10 @@ The recovery controller downloaded and verified batches sequentially from Drive,
 
 The next recovery should keep the existing staging root so batches with valid checkpoints can be skipped. The remaining archive downloads need bounded range requests that resume from the byte offset already written after a network interruption. Once all 40 batches are verified, consolidate the marker lists, compute normalization from the training partition only, and start the CUDA training process. Drive synchronization should retain the run state, configuration, checkpoints, and final outputs across a Colab reset.
 
+### 7. Colab recovery retry
+
+At **2026-10-09 12:33 UTC**, a second Colab controller was started on the Tesla T4. It created a fresh Drive run folder and passed a new state-file write check. The controller salvaged **402,653,184 bytes** of the interrupted transfer for batch 37, then rechecked and skipped previously verified staging checkpoints instead of repeating those extractions. The download code now requests bounded byte ranges and resumes at the length already present if a connection cuts off. At the latest captured log, normalization and training had not started; the remaining archives were still being staged.
+
 ## Experiment specification
 
 | Item | Current choice |
@@ -60,7 +64,7 @@ The next recovery should keep the existing staging root so batches with valid ch
 | Accelerator checked | NVIDIA Tesla T4 in Colab; synthetic forward/backward passed |
 | Normalization | To be computed from training clips only |
 | Current epoch count | 0 |
-| Current result | None; normalization and training have not started |
+| Current result | None; at the latest recorded update, the resumed run was still staging |
 
 ## Reproduction limits
 

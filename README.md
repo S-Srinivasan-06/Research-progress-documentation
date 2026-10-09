@@ -11,7 +11,7 @@ The work began with a critical review of EEG seizure detection and a closer exam
 
 ## Current status
 
-The 200 Hz features were prepared in 40 archive batches and saved to Drive. The first private Kaggle staging attempt stopped at a shared-file download quota before normalization or training. A later Colab recovery restored 36 of 40 batches before a Drive transfer ended with an incomplete response. Its completed batch checkpoints and run log were saved to Drive. Model normalization and training have not started, and there are no reproduction metrics to report.
+The 200 Hz features were prepared in 40 archive batches and saved to Drive. The first private Kaggle staging attempt stopped at a shared-file download quota before normalization or training. A later Colab recovery restored 36 of 40 batches before a Drive transfer ended with an incomplete response. Its completed batch checkpoints and run log were saved to Drive. A resumed Colab attempt has now started from those verified checkpoints. At this update, model normalization and training have not started, and there are no reproduction metrics to report.
 
 ## Reproduction setup
 
