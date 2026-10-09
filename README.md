@@ -9,6 +9,8 @@ The work began with a critical review of EEG seizure detection and a closer exam
 - [Project progress and decisions](docs/PROJECT_PROGRESS.md) gives the chronology, current run status, and known reproduction limits.
 - [Progress notebook](notebooks/project_progress.ipynb) records the setup and includes small cells for reading a sanitized run-state file and summarizing metrics when they exist.
 
+- [Implementation audit](docs/IMPLEMENTATION_AUDIT.md) compares the paper, authors' code, and our actual training setup.
+
 ## Current status
 
 On 2026-10-09 at 14:23 UTC, a fresh diagnostic found a replacement CPU runtime with no training files or processes. Earlier monitor calls had returned saved cell output, so the apparent stall at epoch 4 was not a reliable live observation. Direct Drive inspection recovered aggregate metrics through epoch 7, saved at 13:33 UTC. Epoch 4 remains the best development-AUROC checkpoint at 0.7694. Both `last.pt` and `best.pt`, the normalization, configuration, and metrics are present in Drive. Checkpoint contents have not yet been reopened in the replacement runtime.

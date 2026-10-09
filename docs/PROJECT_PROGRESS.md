@@ -73,6 +73,10 @@ The available evidence establishes runtime replacement and stale monitoring outp
 
 Recovery must explicitly load the saved training checkpoint; the controller's existing launch command does not automatically pass the trainer's supported `--resume` argument. Preserve both the latest checkpoint and the best development checkpoint. Restore the existing features and saved training normalization after GPU allocation and Drive authorization. Future monitoring must include a fresh execution timestamp and invocation marker, and reject old notebook outputs as live evidence.
 
+### 11. Full-paper and implementation fidelity review
+
+The paper, released source, embedded training bundle, and preprocessing code were reviewed after the interrupted run. The audit confirmed preservation of the core network and two-output maximum head. It found material differences in scalar versus per-electrode normalization, patient-weighted training sampling, and clip populations, plus unresolved graph-helper and paper/code ambiguities. No single cause of the AUROC gap has been demonstrated. The next scientific comparison should establish a release-oriented baseline and vary these factors separately. The available dataset remains a different release from the paper's dataset. [Full audit](IMPLEMENTATION_AUDIT.md). No new model training was launched during this review.
+
 ## Experiment specification
 
 | Item | Current choice |
