@@ -1,0 +1,50 @@
+{
+  "name": "primary_operating_point",
+  "model": {
+    "checkpoint": "best.pt",
+    "epoch": 4,
+    "head": "scalar binary logit converted to probability with sigmoid"
+  },
+  "input": {
+    "sample_rate_hz": 200,
+    "clip_duration_seconds": 12,
+    "shape": [
+      12,
+      19,
+      100
+    ]
+  },
+  "threshold_selection": {
+    "source_partition": "dev",
+    "primary_target_sensitivity_recall": 0.95,
+    "achieved_dev_sensitivity_recall": 0.9502164502164502,
+    "threshold": 0.07521818578243256,
+    "comparison": ">=",
+    "rule": "highest observed DEV positive score threshold meeting target recall"
+  },
+  "dev_confusion": {
+    "tp": 2195,
+    "fn": 115,
+    "tn": null,
+    "fp": null,
+    "sensitivity_recall": 0.9502164502164502,
+    "specificity": null,
+    "precision": null,
+    "f1": null,
+    "note": "DEV negatives were not scored."
+  },
+  "eval_confusion_and_metrics": {
+    "threshold": 0.07521818578243256,
+    "tn": 8101,
+    "fp": 28014,
+    "fn": 55,
+    "tp": 2214,
+    "sensitivity_recall": 0.9757602468047598,
+    "specificity": 0.22431122802159767,
+    "precision": 0.07324335053592695,
+    "f1": 0.13625873157522234
+  },
+  "scope": "12-second clip-level classification; does not claim clinical seizure-event sensitivity",
+  "interpretation": "Changing this threshold changes the operating point; AUROC and average precision for the fixed scores do not change.",
+  "baseline_threshold_unchanged": 0.7018824219703674
+}

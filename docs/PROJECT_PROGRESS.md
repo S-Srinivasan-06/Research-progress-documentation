@@ -1,6 +1,6 @@
 # Project progress and decisions
 
-Last updated: 2026-10-10 05:37 UTC. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
+Last updated: 2026-10-10 08:16 UTC. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
 
 ## Objective
 
@@ -83,6 +83,16 @@ At **2026-10-10 05:33:55 UTC**, the saved checkpoint was reopened and verified w
 
 At the latest fresh check, **2026-10-10 05:37:14 UTC**, the controller and synchronizer were alive with no reported error. Batches **1-3 of 40** were complete, and batch 4 was transferring. The controller is restaging the **40 saved feature and marker archive pairs**, totaling **30,071,690,466 compressed bytes**. This is restoration of the existing 200 Hz transformed features, not EDF resampling. Training had not started, and evaluation had not started. The runtime cause remains unknown. The run-folder and corpus identifiers are intentionally omitted.
 
+### 13. Completed run and sensitivity diagnosis
+
+The latest verification at **2026-10-10 08:16:21 UTC** records eight completed epochs, early stopping, best checkpoint epoch 4, and a completed one-time held-out evaluation. At the stored threshold of **0.701882**, eval AUROC was **0.840075**, average precision **0.295845**, accuracy **0.928199**, F1 **0.320178**, precision **0.363585**, clip recall **0.286029**, and specificity **0.968545**. The evaluation contained 38,384 clips: 2,269 positive and 36,115 negative. The corresponding counts were TP 649, FN 1,620, FP 1,136, and TN 34,979. These are clip counts, not seizure-event counts.
+
+The checkpoint was selected by development AUROC; its original threshold was selected by maximum development F1. A CPU-only, threshold-only analysis later selected cutoffs from development positive scores and then evaluated them once on eval. At the primary prespecified dev-recall-0.95 cutoff of **0.075218**, eval clip recall was **0.975760**, with **0.775689** false-positive rate and **0.073243** precision: 28,014 false-positive clips out of 36,115 eval negatives. This changes the operating point only; AUROC and average precision remain unchanged, and no model improvement is claimed. All target points and the 0.5 reference are in the [sensitivity diagnosis](SENSITIVITY_DIAGNOSIS.md) and [sanitized threshold report](../results/sensitivity_threshold_report.json); the [primary operating point record](../results/primary_operating_point.json) gives its selection rule and counts. Diagnostic score inputs and run artifacts are saved in the authorized Drive workspace; this repository contains sanitized aggregates only.
+
+The patient-equal sampler remains unchanged. Its expected positive draw fraction was calculated as **0.167791** for 22,446 balanced-pool clips across 574 patients. The expected draw share differs from the pool's 50% positive fraction; the effect of this class mix on score quality is untested. A possible controlled loss-weight ablation can preserve patient-equal contribution and use an expected positive weight near 4.96; no such retraining has been run.
+
+The cached completion summary has only partial epoch 8 development fields, while the public development history contains complete rows through epoch 7. No epoch 8 row was added to `development_metrics.jsonl` because its complete original row was not available locally.
+
 ## Experiment specification
 
 | Item | Current choice |
@@ -92,19 +102,22 @@ At the latest fresh check, **2026-10-10 05:37:14 UTC**, the controller and synch
 | Feature sampling rate | 200 Hz |
 | Input representation | Log-amplitude FFT features, 100 bins, 19 nodes |
 | Partitions | Official patient-separated train, development, and evaluation |
-| Training sampling | Balanced clip pool with patient-balanced sampling weights |
+| Training sampling | Balanced pool with patient-equal replacement sampling; expected positive draw fraction 0.167791 across 574 patients; preference retained |
 | Accelerator checked | NVIDIA Tesla T4 in Colab; synthetic forward/backward passed; CPU continuation authorized |
 | Normalization | Computed from training clips only; saved at latest snapshot |
-| Current epoch count | 7 saved epochs; CPU checkpoint recovery is restaging archives before continuation |
-| Best development result | Epoch 4 AUROC 0.7694; latest epoch 7 AUROC 0.7675 |
-| Held-out evaluation | Not run |
+| Completed training | 8 epochs; stopped by configured early stopping |
+| Best development checkpoint | Epoch 4; AUROC 0.769421 |
+| Held-out evaluation | Complete once; AUROC 0.840075, clip recall 0.286029, specificity 0.968545 |
+| Threshold rule | Checkpoint selected by development AUROC; threshold 0.701882 selected by maximum development F1 |
+| Sensitivity-first operating points | Dev target recalls 0.85, 0.90, 0.95, and 0.99 measured once on eval; see sensitivity report |
+| Event-level metrics | Not computed; current result is 12-second clip classification |
 
 ## Reproduction limits
 
 This setup does not match the paper exactly: the paper used TUSZ v2.0.1 and describes 22 derivations, while the released model code uses 19 nodes and the available corpus is v2.0.6. Patient-balanced sampling also changes the training distribution. Preserve these distinctions in any later comparison.
 
-The released article's segment-level AUROC or accuracy cannot be treated as continuous event sensitivity, false alarms per 24 hours, or detection latency. Those measures require a continuous scoring pipeline and are not generated by the present clip-classification run alone. The seven saved development epochs are an interrupted run snapshot, not a final or held-out result. Do not draw clinical conclusions from these results.
+The released article's segment-level AUROC or accuracy cannot be treated as continuous event sensitivity, false alarms per 24 hours, or detection latency. Those measures require original event intervals and a defined continuous scoring and event-matching pipeline; they are not generated by the present clip-classification run alone. The completed evaluation is one held-out clip-level assessment of an adapted setup, with no confidence interval or across-seed estimate. Do not draw clinical conclusions from these results.
 
 ## Update procedure
 
-When the run changes, add a dated entry above or below with the observed timestamp, completed batches, active phase, checkpoint-sync status, and any error. State explicitly whether normalization, training, and evaluation have started. Link to output filenames only when they contain no corpus identifiers or access details. Do not add credentials, restricted data locators, or EEG files.
+When the run changes, add a dated entry above or below with the observed timestamp, completed phase, and any error. Report only sanitized aggregate metrics, with split, clip-level scope, checkpoint rule, and threshold-selection rule. Do not publish prediction rows, credentials, restricted data locators, participant identifiers, or EEG files.

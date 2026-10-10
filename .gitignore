@@ -3,7 +3,11 @@ data/
 datasets/
 artifacts/
 outputs/
-results/
+results/*
+!results/development_metrics.jsonl
+!results/final_eval_metrics.json
+!results/sensitivity_threshold_report.json
+!results/primary_operating_point.json
 *.edf
 *.tse
 *.tse_bi

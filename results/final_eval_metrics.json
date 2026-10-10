@@ -1,0 +1,30 @@
+{
+  "run_date": "2026-10-10",
+  "status": "complete",
+  "partition": "eval",
+  "metric_scope": "12-second clip classification",
+  "sample_rate_hz": 200,
+  "checkpoint_epoch": 4,
+  "checkpoint_selection": "maximum development AUROC",
+  "threshold": 0.7018824219703674,
+  "threshold_selection": "maximum development F1 at the selected checkpoint",
+  "example_count": 38384,
+  "positive_clip_count": 2269,
+  "negative_clip_count": 36115,
+  "metrics": {
+    "auroc": 0.84007510653343,
+    "average_precision": 0.2958445787900488,
+    "accuracy": 0.9281992496873698,
+    "f1": 0.32017760236803156,
+    "precision": 0.36358543417366945,
+    "recall": 0.2860290877038343,
+    "specificity": 0.9685449259310536
+  },
+  "confusion_counts": {
+    "true_positive_clips": 649,
+    "false_negative_clips": 1620,
+    "false_positive_clips": 1136,
+    "true_negative_clips": 34979
+  },
+  "event_level_metrics_available": false
+}
