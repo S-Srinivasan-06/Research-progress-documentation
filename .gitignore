@@ -30,3 +30,11 @@ secrets/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+
+# Private experiment inputs and runtime products
+experiments/**/private/
+experiments/**/runs/
+experiments/**/repo/
+*.npz
+*.pkl
+*.zip

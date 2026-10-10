@@ -1,0 +1,47 @@
+{
+  "source_version": "qc200-20261010-v1",
+  "dataset": "TUSZ v2.0.6",
+  "paper_dataset": "TUSZ v2.0.1",
+  "status": "staged_data_validation",
+  "fresh_training_required": true,
+  "current_stage": {
+    "archive_restore": "40/40 files restored",
+    "source_cache_comparison": "representative sample passed",
+    "full_feature_audit": "completion unconfirmed after Colab runtime reset",
+    "b1_training": "not started; no metrics or checkpoint",
+    "w1_queue": "helper prepared but not deployed",
+    "runtime_recovery": "user reconnected on CPU and reauthorized Drive; recovery not confirmed"
+  },
+  "variants": {
+    "B1": {
+      "positive_loss_weight": 1
+    },
+    "W1": {
+      "positive_loss_weight": "(1-q)/q from exact patient-total-equal sampled pool"
+    }
+  },
+  "seed": 123,
+  "normalization": "per-electrode moments on seeded balanced training pool, before augmentation",
+  "checkpoint_selection": "dev AUROC",
+  "early_stopping": "unweighted dev BCE, patience 5",
+  "primary_dev_operating_point": {
+    "recall_target": 0.95,
+    "threshold_rule": "highest threshold meeting empirical recall target"
+  },
+  "eval": "separate explicit frozen-selection pass; prior benchmark use disclosed",
+  "sampling_rate": 200,
+  "sequence_seconds": 12,
+  "feature_shape": [
+    12,
+    19,
+    100
+  ],
+  "expected_partition_rows": {
+    "train": 261865,
+    "dev": 73387,
+    "test": 38384
+  },
+  "event_scoring_status": "not implemented; continuous mapping/protocol required",
+  "source_cache_equivalence_status": "representative source/cache comparison passed; full feature audit completion unconfirmed",
+  "full_training_status": "not_started_for_controlled_B1_W1"
+}

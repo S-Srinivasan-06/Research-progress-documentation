@@ -1,0 +1,120 @@
+{
+  "source_version": "qc200-20261011-public-v2",
+  "origin": "Frozen local QC200 trainer source; upstream model restored at runtime from the pinned public commit plus documented local compatibility repairs.",
+  "upstream_reference": {
+    "repository": "https://github.com/Open-EXG/DGDCN-EEG-Seizure-Detection",
+    "commit": "96c7bee49c240124735ffc2ab2ad118d27a1ff97",
+    "restore_helper": "../qc200-training-runtime/restore_reference.py",
+    "license_note": "No upstream license was identified in the inspected snapshot. This backup makes no new license grant."
+  },
+  "excluded": [
+    "private/",
+    "repo/",
+    "runs/",
+    "notes/",
+    "venv/",
+    "__pycache__/",
+    "generated outputs and data payloads"
+  ],
+  "integrity_method": "File-size inventory only; no hashes.",
+  "inventory": [
+    {
+      "path": "ARCHITECTURE_DECISIONS.md",
+      "bytes": 1332
+    },
+    {
+      "path": "build_notebook.py",
+      "bytes": 3943
+    },
+    {
+      "path": "checkpoint_sync.py",
+      "bytes": 2875
+    },
+    {
+      "path": "config.B1.example.json",
+      "bytes": 969
+    },
+    {
+      "path": "drive_io.py",
+      "bytes": 4322
+    },
+    {
+      "path": "execute_pipeline.py",
+      "bytes": 8146
+    },
+    {
+      "path": "experiment_plan.json",
+      "bytes": 1721
+    },
+    {
+      "path": "finalize_qc200.py",
+      "bytes": 5485
+    },
+    {
+      "path": "preprocess_qc200.py",
+      "bytes": 8962
+    },
+    {
+      "path": "PREPROCESSING_CONTRACT.md",
+      "bytes": 2726
+    },
+    {
+      "path": "QC200_Training.ipynb",
+      "bytes": 8767
+    },
+    {
+      "path": "README.md",
+      "bytes": 3987
+    },
+    {
+      "path": "restore_qc200.py",
+      "bytes": 2585
+    },
+    {
+      "path": "run_contract.py",
+      "bytes": 3161
+    },
+    {
+      "path": "stage_archive.py",
+      "bytes": 18543
+    },
+    {
+      "path": "test_training_contract.py",
+      "bytes": 6752
+    },
+    {
+      "path": "threshold_policy.py",
+      "bytes": 4692
+    },
+    {
+      "path": "train_qc200.py",
+      "bytes": 2932
+    },
+    {
+      "path": "trainer.py",
+      "bytes": 29150
+    },
+    {
+      "path": "tusz_annotations.py",
+      "bytes": 17750
+    }
+  ],
+  "runtime_inventory": [
+    {
+      "path": "cpu_fallback_watch.py",
+      "bytes": 22011
+    },
+    {
+      "path": "queue_w1.py",
+      "bytes": 22232
+    },
+    {
+      "path": "README.md",
+      "bytes": 2367
+    },
+    {
+      "path": "restore_reference.py",
+      "bytes": 7308
+    }
+  ]
+}
