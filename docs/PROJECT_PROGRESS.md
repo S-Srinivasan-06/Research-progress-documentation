@@ -1,6 +1,6 @@
 # Project progress and decisions
 
-Last updated: 2026-10-09 14:24 UTC. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
+Last updated: 2026-10-10 05:37 UTC. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
 
 ## Objective
 
@@ -77,6 +77,12 @@ Recovery must explicitly load the saved training checkpoint; the controller's ex
 
 The paper, released source, embedded training bundle, and preprocessing code were reviewed after the interrupted run. The audit confirmed preservation of the core network and two-output maximum head. It found material differences in scalar versus per-electrode normalization, patient-weighted training sampling, and clip populations, plus unresolved graph-helper and paper/code ambiguities. No single cause of the AUROC gap has been demonstrated. The next scientific comparison should establish a release-oriented baseline and vary these factors separately. The available dataset remains a different release from the paper's dataset. [Full audit](IMPLEMENTATION_AUDIT.md). No new model training was launched during this review.
 
+### 12. CPU checkpoint recovery
+
+At **2026-10-10 05:33:55 UTC**, the saved checkpoint was reopened and verified with seven completed epochs, epoch 4 still the best checkpoint, and seven metric rows available. The CPU continuation controller and checkpoint synchronizer started in a new output run folder. Continuation is set to begin at epoch 8. CPU continuation is an authorized option when GPU runtime is unavailable. The checkpoint preserves training normalization, optimizer, scheduler, Python/NumPy/CPU Torch RNG, and early-stopping state. CUDA RNG does not drive CPU dropout, and hardware continuation is not bitwise identical.
+
+At the latest fresh check, **2026-10-10 05:37:14 UTC**, the controller and synchronizer were alive with no reported error. Batches **1-3 of 40** were complete, and batch 4 was transferring. The controller is restaging the **40 saved feature and marker archive pairs**, totaling **30,071,690,466 compressed bytes**. This is restoration of the existing 200 Hz transformed features, not EDF resampling. Training had not started, and evaluation had not started. The runtime cause remains unknown. The run-folder and corpus identifiers are intentionally omitted.
+
 ## Experiment specification
 
 | Item | Current choice |
@@ -87,9 +93,9 @@ The paper, released source, embedded training bundle, and preprocessing code wer
 | Input representation | Log-amplitude FFT features, 100 bins, 19 nodes |
 | Partitions | Official patient-separated train, development, and evaluation |
 | Training sampling | Balanced clip pool with patient-balanced sampling weights |
-| Accelerator checked | NVIDIA Tesla T4 in Colab; synthetic forward/backward passed |
+| Accelerator checked | NVIDIA Tesla T4 in Colab; synthetic forward/backward passed; CPU continuation authorized |
 | Normalization | Computed from training clips only; saved at latest snapshot |
-| Current epoch count | 7 saved epochs; training stopped after runtime replacement |
+| Current epoch count | 7 saved epochs; CPU checkpoint recovery is restaging archives before continuation |
 | Best development result | Epoch 4 AUROC 0.7694; latest epoch 7 AUROC 0.7675 |
 | Held-out evaluation | Not run |
 
