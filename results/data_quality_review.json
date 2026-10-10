@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-10",
+  "corpus_release": "TUSZ v2.0.6",
+  "model_view": {
+    "sample_rate_hz": 200,
+    "clip_seconds": 12,
+    "required_eeg_channels": 19,
+    "official_splits_preserved": true
+  },
+  "source_audit": {
+    "edf_recordings_scanned": 8140,
+    "edf_headers_and_payloads_parseable": 8140,
+    "distinct_reported_flat_or_dead_candidates": 134,
+    "candidate_waveforms_fully_verified": 134,
+    "candidate_paths_unmatched_or_ambiguous": 0,
+    "recordings_excluded": 630,
+    "exclusion_reasons": {
+      "missing_required_electrode": 625,
+      "constant_required_eeg_channel": 4,
+      "byte_identical_duplicate_removed": 1
+    },
+    "source_files_modified": false,
+    "content_hashes_computed": false
+  },
+  "cached_marker_reconciliation": {
+    "original_rows": 373792,
+    "filtered_rows": 373636,
+    "removed_rows": 156,
+    "added_rows": 0,
+    "removed_labels": {
+      "negative": 156,
+      "positive": 0
+    },
+    "development_rows_unchanged": true,
+    "evaluation_rows_unchanged": true,
+    "marker_bundle_uploaded_to_existing_drive_folder": true,
+    "drive_sharing_settings_changed": false,
+    "status": "validated_locally_and_drive_metadata_read_back"
+  },
+  "annotation_review": {
+    "source_rows": 9707,
+    "valid_rows": 9706,
+    "zero_duration_rows_omitted_from_derived_overlay": 1,
+    "kept_negative_clips_with_coverage_review_flag": 336620,
+    "coverage_flags_changed_labels_or_removed_clips": false,
+    "positive_clip_rule": "At least 1 second unioned seizure overlap"
+  },
+  "patient_balanced_training_pool": {
+    "training_pool_rows": 22446,
+    "positive_rows": 11223,
+    "negative_rows": 11223,
+    "patients_with_training_pool_rows": 575,
+    "expected_positive_probability": 0.16795700091183208,
+    "candidate_positive_loss_weight_for_ablation_only": 4.953904836184491,
+    "baseline_expected_positive_probability": 0.16779146188417612,
+    "loss_weight_was_used_in_training": false
+  },
+  "next_training_requirements": [
+    "Use the filtered training markers",
+    "Recompute normalization from retained training features",
+    "Recalculate sampler-weighted seizure prevalence before any positive loss-weight ablation"
+  ],
+  "limitations": [
+    "Full waveform verification covered the reported flat/dead candidates, not every corpus EDF",
+    "No retraining was performed, and improved AUROC has not been demonstrated"
+  ]
+}

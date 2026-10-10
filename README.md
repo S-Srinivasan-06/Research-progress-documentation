@@ -10,6 +10,8 @@ The work began with a critical review of EEG seizure detection and a closer exam
 - [Progress notebook](notebooks/project_progress.ipynb) records the setup and includes small cells for reading a sanitized run-state file and summarizing metrics when they exist.
 - [Implementation audit](docs/IMPLEMENTATION_AUDIT.md) compares the paper, authors' code, and our actual training setup.
 - [Sensitivity diagnosis](docs/SENSITIVITY_DIAGNOSIS.md) explains the completed clip-level result and measured sensitivity-first threshold tradeoffs.
+- [Data quality review](docs/DATA_QUALITY_REVIEW.md) explains the verified anomaly policy, annotation convention, and requirements for the next training view.
+- [Sanitized data quality counts](results/data_quality_review.json) contains aggregate scan and marker reconciliation results only.
 - [Sanitized final evaluation metrics](results/final_eval_metrics.json) contains aggregate counts and scores only.
 - [Primary operating point](results/primary_operating_point.json) records the prespecified development-recall-0.95 cutoff and its eval clip metrics.
 - [All measured threshold comparisons](results/sensitivity_threshold_report.json) contains sanitized aggregate threshold tradeoffs.
@@ -26,7 +28,7 @@ This is an adaptation, not a strict replication of the article. The paper descri
 
 ## Data handling
 
-The EEG corpus is restricted research data. This public record contains no recordings, labels, file IDs, folder IDs, credentials, access links, or Kaggle dataset references. Obtain the corpus through its official access process and follow its data-use terms. The local outlier report was set aside at the user's direction; its suggested exclusions have not been applied.
+The EEG corpus is restricted research data. This public record contains no recordings, individual annotations, file IDs, folder IDs, credentials, access links, or Kaggle dataset references. Obtain the corpus through its official access process and follow its data-use terms. The original outlier reports were checked against the source data; the [data quality review](docs/DATA_QUALITY_REVIEW.md) records the confirmed technical exclusions and limitations.
 
 ## Reporting rule
 
