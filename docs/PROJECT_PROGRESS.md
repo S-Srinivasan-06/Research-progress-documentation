@@ -1,6 +1,6 @@
 # Project progress and decisions
 
-Last updated: 2026-10-10 08:16 UTC. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
+Last updated: 2026-10-11. Times below are UTC where a runtime log supplied a timestamp. Earlier project discussions did not have a reliable timestamp, so those entries are ordered by phase rather than assigned a date.
 
 ## Objective
 
@@ -93,6 +93,14 @@ The patient-equal sampler remains unchanged. Its expected positive draw fraction
 
 The cached completion summary has only partial epoch 8 development fields, while the public development history contains complete rows through epoch 7. No epoch 8 row was added to `development_metrics.jsonl` because its complete original row was not available locally.
 
+### 14. QC200 controlled B1/W1 staging and public code backup (2026-10-11)
+
+A separate controlled implementation is being staged against the existing 200 Hz features. Its archive restore reached 40/40 files and a representative source/cache comparison passed. The Colab runtime later reset, so full feature audit completion is unconfirmed. No B1 training metrics or checkpoint are available. The user has reconnected on CPU and reauthorized Drive, but recovery is not confirmed. The representative comparison does not establish full raw-to-cache equivalence.
+
+The implementation preserves the reviewed QC markers, fresh training-only normalization, strict feature validation, and the B1/W1 loss-weight comparison. Historical H0 already used patient-balanced sampling, so sampling is not described as a new change. B1 uses unweighted BCE; W1 computes its positive-class weight from the exact selected pool and uses a separate run ID and output folder. The staged pipeline currently covers B1. The W1 queue helper is prepared but has not been deployed.
+
+The public source backup excludes copied upstream model files and the adjacency pickle because no upstream license was identified. A runtime helper restores the required files from upstream commit `96c7bee49c240124735ffc2ab2ad118d27a1ff97` and applies documented local repairs. This does not grant redistribution rights. The [QC200 training guide](QC200_TRAINING.md) describes entry points, persistence, held-out evaluation guards, CPU recovery limits, and the clean public notebook.
+
 ## Experiment specification
 
 | Item | Current choice |
@@ -121,3 +129,10 @@ The released article's segment-level AUROC or accuracy cannot be treated as cont
 ## Update procedure
 
 When the run changes, add a dated entry above or below with the observed timestamp, completed phase, and any error. Report only sanitized aggregate metrics, with split, clip-level scope, checkpoint rule, and threshold-selection rule. Do not publish prediction rows, credentials, restricted data locators, participant identifiers, or EEG files.
+
+
+## 2026-10-11: code backup, CPU recovery and W1 queue
+
+The original 200 Hz restore reached all 40 batches and representative source/cache comparisons passed. Colab reset before B1 training was confirmed. The interrupted Drive run remains preserved. A new CPU attempt restores the existing feature archives, repeats validation and fits fresh training normalization before B1 optimization. W1 is queued as a separate fresh experiment with positive BCE weighting; it starts only after B1 completes and persistence is verified, with enough runtime remaining. Final evaluation is separate and has not been run for B1 or W1.
+
+The public backup includes exact frozen training sources, runtime supervisors, a clean notebook and a pinned upstream restore helper. Restricted recordings, corpus manifests, private references, credentials, checkpoint weights and prediction rows remain outside GitHub. Drive stores run artifacts; GitHub stores recoverable code.
